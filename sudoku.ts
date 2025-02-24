@@ -12,6 +12,18 @@ const board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
+const board1 = [
+    [0, 4, 5, 8, 7, 0, 0, 0, 6],
+    [0, 2, 6, 0, 4, 0, 0, 0, 1],
+    [0, 9, 0, 2, 5, 6, 4, 0, 0],
+    [9, 0, 0, 4, 0, 0, 5, 6, 0],
+    [2, 0, 4, 6, 0, 0, 0, 0, 0],
+    [0, 8, 0, 0, 0, 0, 3, 0, 0],
+    [0, 0, 9, 1, 3, 2, 6, 8, 0],
+    [1, 6, 0, 0, 0, 8, 0, 3, 4],
+    [0, 0, 8, 0, 0, 4, 2, 1, 0]
+]
+
 
 function is_valid(board, row, col, num){
         for(let i = 0; i < 9; i++){
@@ -33,7 +45,6 @@ function is_valid(board, row, col, num){
 }
 
 function solve(board){
-    return false;
 }
 
 function contains_zero(board){
