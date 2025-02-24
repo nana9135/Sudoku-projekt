@@ -1,4 +1,4 @@
-const x: number = 7;
+const x: number = 2;
 const y: number = 4;
 
 const x0: number = Math.floor(x/3)*3
