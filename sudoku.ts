@@ -14,9 +14,20 @@ const board = [
 
 
 function is_valid(board, row, col, num){
-    for(let i = 0; i < 9; i++){
-        if(board[i][col] === num || board[row][i] === num){ // checks rows and columns
-            return false;
+        for(let i = 0; i < 9; i++){
+            if(board[i][col] === num || board[row][i] === num){ // checks rows and columns
+                return false;
+            }
+
+            const x0 = Math.floor(x / 3) * 3;
+            const y0 = Math.floor(y / 3) * 3;
+
+        for(let k = y0; k < y0 + 3; k++){
+            for(let j = x0; j < x0 + 3; j++){
+                if(board[y0][x0] === num){
+                    return false;
+                }
+            }
         }
     }
 }
