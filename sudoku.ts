@@ -1,6 +1,8 @@
 // Implmentation of a sudoku solver
 
-const board = [
+type Board = number[][];
+
+const board: Board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -12,7 +14,7 @@ const board = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0]
 ]
 
-const board1 = [
+const board1: Board = [
     [0, 4, 5, 8, 7, 0, 0, 0, 6],
     [0, 2, 6, 0, 4, 0, 0, 0, 1],
     [0, 9, 0, 2, 5, 6, 4, 0, 0],
@@ -25,50 +27,55 @@ const board1 = [
 ]
 
 
-function is_valid(board, row, col, num){
+function is_valid(board: Board, row: number, col: number, num: number): boolean{
         for(let i = 0; i < 9; i++){
             if(board[i][col] === num || board[row][i] === num){ // checks rows and columns
                 return false;
             }
-
-            const x0 = Math.floor(x / 3) * 3;
-            const y0 = Math.floor(y / 3) * 3;
+        }
+            const x0: number = Math.floor(row / 3) * 3;
+            const y0: number = Math.floor(col / 3) * 3;
 
         for(let k = y0; k < y0 + 3; k++){
             for(let j = x0; j < x0 + 3; j++){
-                if(board[y0][x0] === num){
+                if(board[j][k] === num){
                     return false;
                 }
             }
         }
-    }
+    return true;
 }
 
-function solve(board){
-}
-
-function contains_zero(board){
+function contains_zero(board: Board): [number, number] | null{
         for (let row = 0; row < 9; row++){
             for(let col = 0; col < 9; col++){
                 if (board[row][col] === 0){
-                    return [row,col]; }
+                    return [row,col]; 
+                }
             }
         }
         return null;
     }
  
-function solve(board){
+function solve(board: Board): boolean{
         let empty = contains_zero(board);
         
         if(!empty){
-        return true;}
+            return true;}
+            
         
-        let [row, col] = empty;
+        let [row, col]: number[] = empty;
 
-        for(let num = 1; num = 9; num++){
+        for(let num = 1; num <= 9; num++){
             if(is_valid(board, row, col, num)){
-                board[row][col] = 0; 
-                }
+                board[row][col] = num;
+                if(solve(board))
+                    return true;
+                board[row][col] = 0;
             }
+        }
     return false;
 }
+
+solve(board1)
+console.log(board1);
