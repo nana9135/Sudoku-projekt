@@ -45,6 +45,13 @@ function is_valid(board, row, col, num){
 }
 
 function solve(board){
+    let empty = contains_zero(board)
+
+    while (contains_zero(board)){
+
+        
+    }
+    return false;
 }
 
 function contains_zero(board){
