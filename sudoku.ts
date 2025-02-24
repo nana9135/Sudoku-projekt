@@ -32,18 +32,29 @@ function is_valid(board, row, col, num){
     }
 }
 
-function solve(board){
-    return false;
-}
 
 function contains_zero(board){
-    for (let row = 0; row < 9; row++){
-        for(let col = 0; col < 9; col++){
-            if (board[row][col] === 0){
-                return [row,col]; }
+        for (let row = 0; row < 9; row++){
+            for(let col = 0; col < 9; col++){
+                if (board[row][col] === 0){
+                    return [row,col]; }
             }
         }
         return null;
     }
  
-    
+function solve(board){
+        let empty = contains_zero(board);
+        
+        if(!empty){
+        return true;}
+        
+        let [row, col] = empty;
+
+        for(let num = 1; num = 9; num++){
+            if(is_valid(board, row, col, num)){
+                board[row][col] = 0; 
+                }
+            }
+    return false;
+}
