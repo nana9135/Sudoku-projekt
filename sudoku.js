@@ -87,5 +87,9 @@ function solve(board) {
     }
     return false;
 }
+var hej = prompt("Kss kähba");
+console.log(hej);
+function apply(arr, x, y, value) {
+}
 solve(extremeboard);
 console.log(extremeboard);
