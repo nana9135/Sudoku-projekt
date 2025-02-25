@@ -102,5 +102,5 @@ function solve(board: Board): boolean{
     return false;
 }
 
-solve(board1)
-console.log(board1);
+solve(extremeboard)
+console.log(extremeboard);
