@@ -105,6 +105,10 @@ function solve(board: Board): boolean{
 const facit_easy_board = [];
 
 function apply(board: Board, value: number, x: number, y: number): Board | void {
+    
+    let playeraboard = board;
+    const answerboard: Board = facit_easy_board; // Assuming facit_easy_board is defined somewhere
+
     if (value > 9 || value < 1) {
         console.log("Invalid input: Value must be between 1 and 9");
         return;
@@ -114,9 +118,6 @@ function apply(board: Board, value: number, x: number, y: number): Board | void 
         console.log("Invalid position: Coordinates must be between 0 and 8");
         return;
     }
-
-    let playeraboard = board;
-    const answerboard: Board = facit_easy_board; // Assuming facit_easy_board is defined somewhere
 
     if (playeraboard[x][y] !== 0) { // När spelaren skriver in en position som redan har en siffra
         console.log("Sorry cannot replace an existing number");
@@ -137,7 +138,6 @@ function apply(board: Board, value: number, x: number, y: number): Board | void 
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
                 if (board1[i][j] === board2[i][j]) {
-                    console.log("Congrats, you have finished the game");
                     return true;  // Return true when the game is complete
                 } else {
                     return false;
@@ -146,6 +146,12 @@ function apply(board: Board, value: number, x: number, y: number): Board | void 
         }
         return false;
     }
+
+    if (is_game_complete(playeraboard, answerboard)) {
+        console.log("Congrats, you have finished the game");
+        return playeraboard;
+    }
+    
 }
 
 
