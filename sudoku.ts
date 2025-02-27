@@ -157,17 +157,15 @@ function apply(board: Board, value: number, x: number, y: number): Board | void 
     
 }
 
-function hint(board: Board, x: number, y: number): number {
-    if (board[x][y] !== 0) {
-        return -1; 
+function hint(board: Board, x: number, y: number): number{
+    if(board[y][x] !== 0){
+        return -1; // indicates that the cell is occupied and no hint could be given
     }
-    
-    for (let num = 1; num <= 9; num++) {
-        if (is_valid(board, x, y, num)) {
-            return num; 
-        }
-    }
-    
-    return 0; 
+    const solved = facit(board);
+    return solved[y][x];
 }
 
+// solve(easyboard);
+// console.log(easyboard);
+
+console.log(hint(easyboard, 0, 4));

@@ -134,13 +134,12 @@ function apply(board, value, x, y) {
     }
 }
 function hint(board, x, y) {
-    if (board[x][y] !== 0) {
-        return -1;
+    if (board[y][x] !== 0) {
+        return -1; // indicates that the cell is occupied and no hint could be given
     }
-    for (var num = 1; num <= 9; num++) {
-        if (is_valid(board, x, y, num)) {
-            return num;
-        }
-    }
-    return 0;
+    var solved = facit(board);
+    return solved[y][x];
 }
+// solve(easyboard);
+// console.log(easyboard);
+console.log(hint(easyboard, 0, 4));
