@@ -50,7 +50,10 @@ const extremeboard = [ // Only 28% have finished this board
     [4, 0, 0, 0, 0, 8, 0, 0, 6]
 ]
 
-
+function facit(board: Board): Board{
+    solve(board);
+    return board;
+}
 
 function is_valid(board: Board, row: number, col: number, num: number): boolean{
         for(let i = 0; i < 9; i++){
@@ -107,7 +110,7 @@ const facit_easy_board = [];
 function apply(board: Board, value: number, x: number, y: number): Board | void {
     
     let playeraboard = board;
-    const answerboard: Board = facit_easy_board; // Assuming facit_easy_board is defined somewhere
+    const answerboard: Board = facit(board); // Assuming facit_easy_board is defined somewhere
 
     if (value > 9 || value < 1) {
         console.log("Invalid input: Value must be between 1 and 9");
@@ -154,10 +157,17 @@ function apply(board: Board, value: number, x: number, y: number): Board | void 
     
 }
 
+function hint(board: Board, x: number, y: number): number {
+    if (board[x][y] !== 0) {
+        return -1; 
+    }
+    
+    for (let num = 1; num <= 9; num++) {
+        if (is_valid(board, x, y, num)) {
+            return num; 
+        }
+    }
+    
+    return 0; 
+}
 
-
-
-
-
-solve(extremeboard)
-console.log(extremeboard);
