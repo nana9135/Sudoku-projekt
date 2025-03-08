@@ -1,54 +1,49 @@
 // Implmentation of a sudoku solver
 
+import promptSync from 'prompt-sync';
+const prompt = promptSync();
+
 type Board = number[][];
 
-const board: Board = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
+const boards: Record<string, Board> = {
+    B: [ // 55% have finished this board
+        [0, 4, 5, 8, 7, 0, 0, 0, 6],
+        [0, 2, 6, 0, 4, 0, 0, 0, 1],
+        [0, 9, 0, 2, 5, 6, 4, 0, 0],
+        [9, 0, 0, 4, 0, 0, 5, 6, 0],
+        [2, 0, 4, 6, 0, 0, 0, 0, 0],
+        [0, 8, 0, 0, 0, 0, 3, 0, 0],
+        [0, 0, 9, 1, 3, 2, 6, 8, 0],
+        [1, 6, 0, 0, 0, 8, 0, 3, 4],
+        [0, 0, 8, 0, 0, 4, 2, 1, 0]
+    ],
+    
+    C: [ // 59% People have finished this board
+        [0, 0, 0, 0, 0, 0, 0, 0, 7],
+        [7, 0, 6, 0, 8, 0, 4, 0, 2],
+        [0, 0, 0, 0, 0, 3, 0, 1, 0],
+        [1, 0, 5, 6, 9, 0, 8, 0, 0],
+        [0, 0, 9, 0, 0, 0, 0, 5, 0],
+        [0, 4, 8, 0, 5, 0, 0, 6, 0],
+        [0, 2, 0, 1, 0, 0, 0, 4, 0],
+        [0, 1, 0, 0, 0, 6, 0, 0, 5],
+        [0, 0, 0, 7, 0, 8, 6, 3, 1]
+    ],
+    
+    D:  [ // Only 28% have finished this board
+        [0, 6, 0, 0, 0, 0, 0, 4, 0],
+        [0, 9, 0, 1, 7, 0, 0, 0, 0],
+        [0, 0, 5, 0, 0, 0, 0, 0, 1],
+        [0, 0, 0, 0, 3, 0, 5, 0, 0],
+        [0, 0, 0, 0, 5, 9, 6, 0, 0],
+        [0, 0, 0, 0, 0, 0, 8, 2, 4],
+        [8, 0, 2, 5, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 2, 0, 0, 0],
+        [4, 0, 0, 0, 0, 8, 0, 0, 6]
+    ]
+}
 
-const easyboard = [ // 55% have finished this board
-    [0, 4, 5, 8, 7, 0, 0, 0, 6],
-    [0, 2, 6, 0, 4, 0, 0, 0, 1],
-    [0, 9, 0, 2, 5, 6, 4, 0, 0],
-    [9, 0, 0, 4, 0, 0, 5, 6, 0],
-    [2, 0, 4, 6, 0, 0, 0, 0, 0],
-    [0, 8, 0, 0, 0, 0, 3, 0, 0],
-    [0, 0, 9, 1, 3, 2, 6, 8, 0],
-    [1, 6, 0, 0, 0, 8, 0, 3, 4],
-    [0, 0, 8, 0, 0, 4, 2, 1, 0]
-]
 
-const mediumboard = [ // 59% People have finished this board
-    [0, 0, 0, 0, 0, 0, 0, 0, 7],
-    [7, 0, 6, 0, 8, 0, 4, 0, 2],
-    [0, 0, 0, 0, 0, 3, 0, 1, 0],
-    [1, 0, 5, 6, 9, 0, 8, 0, 0],
-    [0, 0, 9, 0, 0, 0, 0, 5, 0],
-    [0, 4, 8, 0, 5, 0, 0, 6, 0],
-    [0, 2, 0, 1, 0, 0, 0, 4, 0],
-    [0, 1, 0, 0, 0, 6, 0, 0, 5],
-    [0, 0, 0, 7, 0, 8, 6, 3, 1]
-]
-
-const extremeboard = [ // Only 28% have finished this board
-    [0, 6, 0, 0, 0, 0, 0, 4, 0],
-    [0, 9, 0, 1, 7, 0, 0, 0, 0],
-    [0, 0, 5, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 3, 0, 5, 0, 0],
-    [0, 0, 0, 0, 5, 9, 6, 0, 0],
-    [0, 0, 0, 0, 0, 0, 8, 2, 4],
-    [8, 0, 2, 5, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 2, 0, 0, 0],
-    [4, 0, 0, 0, 0, 8, 0, 0, 6]
-]
 
 function facit(board: Board): Board{
     solve(board);
@@ -167,5 +162,75 @@ function hint(board: Board, x: number, y: number): number{
 
 // solve(easyboard);
 // console.log(easyboard);
+// console.log(hint(easyboard, 0, 4));
 
-console.log(hint(easyboard, 0, 4));
+function menu(): void {
+    while (true) {
+        console.log("What do you need help with?");
+        console.log("A) Solve the Board");
+        console.log("B) Apply a value to the board");
+        console.log("C) Get a Hint");
+        console.log("D) Quit");
+        const choice: string = prompt("Enter your choice: ").toUpperCase();
+
+        if(choice === "A"){
+            const boardChoice: string = prompt("Which board would you like to solve? (A, B, C, D): ").toUpperCase();
+            if(boards.boardChoice){
+                facit(boards.boardChoice);
+            }
+            else{
+                console.log("Invalid board choice");
+            }
+        }
+        else if(choice === "B"){
+            const boardApply: string = prompt("To which board would you like to apply? (A, B, C, D): ").toUpperCase();
+            if(boards.boardApply){
+                const valueApply: number = parseInt(prompt("What is the value you would like to add? (1 - 9): "));
+                if(valueApply >= 1 && valueApply <= 9){
+                    const x_coor: number = parseInt(prompt("Enter x coordinates (0 - 8): "));
+                    const y_coor: number = parseInt(prompt("Enter y coordinates (0 - 8): "));
+                    if(x_coor >= 0 && x_coor <= 8 && y_coor >= 0 && y_coor <= 8){
+                        apply(boards.boardApply, valueApply, x_coor, y_coor);
+                    }
+                    else{
+                        console.log("Invalid number");
+                    }
+                }
+                else{
+                    console.log("Invalid number");
+                }
+            }
+            else{
+                console.log("Invalid board choice");
+            }
+        }
+        else if(choice === "C"){
+            const boardHint: string = prompt("For which board would you like a hint? (A, B, C): ").toUpperCase();
+            if (boards.boardHint) {
+                const x: number = parseInt(prompt("Enter x coordinate (0 - 8): "), 10);
+                const y: number = parseInt(prompt("Enter y coordinate (0 - 8): "), 10);
+
+                if (x > 0 || x < 8 || y > 0 || y < 8) {
+                    const hintValue = hint(boards.boardHint, x, y);
+                    if (hintValue === -1) {
+                        console.log("This cell already has a number!");
+                }   else {
+                        console.log(`Hint: Try placing ${hintValue} at (${x}, ${y})`);
+                }
+                }
+                else{
+                    console.log("Invalid Coordinates");
+                }
+                
+            } else {
+                console.log("Invalid board choice");
+            }
+        }
+        else if(choice === "D"){
+            break;
+        }
+        else{
+            console.log("Invalid Input");
+        }  
+    }
+}
