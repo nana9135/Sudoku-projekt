@@ -1,8 +1,8 @@
 "use strict";
 // Implmentation of a sudoku solver
 Object.defineProperty(exports, "__esModule", { value: true });
-var prompt_sync_1 = require("prompt-sync");
-var prompt = (0, prompt_sync_1.default)();
+var promptSync = require("prompt-sync");
+var prompt = promptSync();
 var boards = {
     B: [
         [0, 4, 5, 8, 7, 0, 0, 0, 6],
@@ -85,47 +85,53 @@ function solve(board) {
     }
     return false;
 }
-var facit_easy_board = [];
+//const facit_easy_board = [];
 function apply(board, value, x, y) {
-    var playeraboard = board;
-    var answerboard = facit(board); // Assuming facit_easy_board is defined somewhere
-    if (value > 9 || value < 1) {
-        console.log("Invalid input: Value must be between 1 and 9");
-        return;
-    }
-    if (x > 8 || x < 0 || y > 8 || y < 0) {
-        console.log("Invalid position: Coordinates must be between 0 and 8");
-        return;
-    }
-    if (playeraboard[x][y] !== 0) { // När spelaren skriver in en position som redan har en siffra
+    // if (value > 9 || value < 1) {
+    //     console.log("Invalid input: Value must be between 1 and 9");
+    //     return;
+    // }
+    // if (x > 8 || x < 0 || y > 8 || y < 0) {
+    //     console.log("Invalid position: Coordinates must be between 0 and 8");
+    //     return;
+    // }
+    if (board[y][x] !== 0) { // När spelaren skriver in en position som redan har en siffra
         console.log("Sorry cannot replace an existing number");
         return;
     }
-    if (playeraboard[x][y] !== answerboard[x][y]) { // När siffrorna inte är samma
-        console.log("Nope, not this number. Try again");
-        return;
-    }
-    if (playeraboard[x][y] === answerboard[x][y]) { // När det är rätt siffra
-        console.log("Good job, right number!");
-        return playeraboard;
-    }
-    function is_game_complete(board1, board2) {
-        for (var i = 0; i < 9; i++) {
-            for (var j = 0; j < 9; j++) {
-                if (board1[i][j] === board2[i][j]) {
-                    return true; // Return true when the game is complete
-                }
-                else {
-                    return false;
-                }
-            }
+    else if (board[y][x] === 0) {
+        var answerboard = facit(board); // Assuming facit_easy_board is defined somewhere
+        if (value !== answerboard[y][x]) { // När siffrorna inte är samma
+            console.log("Nope, not this number. Try again");
+            return;
         }
-        return false;
+        else {
+            console.log("Good job, right number!");
+        }
     }
-    if (is_game_complete(playeraboard, answerboard)) {
-        console.log("Congrats, you have finished the game");
-        return playeraboard;
-    }
+    // else if (value !== answerboard[y][x]) { // När siffrorna inte är samma
+    //     console.log("Nope, not this number. Try again");
+    //     return;
+    // }
+    // else if (value === answerboard[y][x]) { // När det är rätt siffra
+    //     console.log("Good job, right number!");
+    // }
+    // function is_game_complete(board1: Board, board2: Board): boolean {
+    //     for (let i = 0; i < 9; i++) {
+    //         for (let j = 0; j < 9; j++) {
+    //             if (board1[i][j] === board2[i][j]) {
+    //                 return true;  // Return true when the game is complete
+    //             } else {
+    //                 return false;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+    // if (is_game_complete(playeraboard, answerboard)) {
+    //     console.log("Congrats, you have finished the game");
+    //     return playeraboard;
+    // }
 }
 function hint(board, x, y) {
     if (board[y][x] !== 0) {
@@ -147,8 +153,8 @@ function menu() {
         var choice = prompt("Enter your choice: ").toUpperCase();
         if (choice === "A") {
             var boardChoice = prompt("Which board would you like to solve? (A, B, C, D): ").toUpperCase();
-            if (boards.boardChoice) {
-                facit(boards.boardChoice);
+            if (boards[boardChoice]) {
+                console.log(facit(boards[boardChoice]));
             }
             else {
                 console.log("Invalid board choice");
@@ -156,20 +162,21 @@ function menu() {
         }
         else if (choice === "B") {
             var boardApply = prompt("To which board would you like to apply? (A, B, C, D): ").toUpperCase();
-            if (boards.boardApply) {
+            if (boards[boardApply]) {
                 var valueApply = parseInt(prompt("What is the value you would like to add? (1 - 9): "));
                 if (valueApply >= 1 && valueApply <= 9) {
                     var x_coor = parseInt(prompt("Enter x coordinates (0 - 8): "));
                     var y_coor = parseInt(prompt("Enter y coordinates (0 - 8): "));
                     if (x_coor >= 0 && x_coor <= 8 && y_coor >= 0 && y_coor <= 8) {
-                        apply(boards.boardApply, valueApply, x_coor, y_coor);
+                        var answer = apply(boards[boardApply], valueApply, x_coor, y_coor);
+                        console.log(answer);
                     }
                     else {
-                        console.log("Invalid number");
+                        console.log("Invalid Coordinates");
                     }
                 }
                 else {
-                    console.log("Invalid number");
+                    console.log("Invalid Value");
                 }
             }
             else {
@@ -178,11 +185,11 @@ function menu() {
         }
         else if (choice === "C") {
             var boardHint = prompt("For which board would you like a hint? (A, B, C): ").toUpperCase();
-            if (boards.boardHint) {
-                var x = parseInt(prompt("Enter x coordinate (0 - 8): "), 10);
-                var y = parseInt(prompt("Enter y coordinate (0 - 8): "), 10);
-                if (x > 0 || x < 8 || y > 0 || y < 8) {
-                    var hintValue = hint(boards.boardHint, x, y);
+            if (boards[boardHint]) {
+                var x = parseInt(prompt("Enter x coordinate (0 - 8): "));
+                var y = parseInt(prompt("Enter y coordinate (0 - 8): "));
+                if (x >= 0 && x <= 8 && y >= 0 && y <= 8) {
+                    var hintValue = hint(boards[boardHint], x, y);
                     if (hintValue === -1) {
                         console.log("This cell already has a number!");
                     }
