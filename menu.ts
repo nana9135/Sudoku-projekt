@@ -3,6 +3,13 @@ import { boards, facit, is_valid, contains_zero, solve, apply, hint, Board } fro
 import * as promptSync from 'prompt-sync';
 const prompt = promptSync();
 
+/**
+ * Displays the main menu and handles user interaction.
+ * @example
+ * // Starts the menu loop and prompts for user choices
+ * menu();
+ * @returns {void} Does not return anything, interacts with the user via console prompts
+ */
 function menu(): void {
     while (true) {
         console.log("What do you need help with?");
