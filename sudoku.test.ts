@@ -71,3 +71,4 @@ import { boards, facit, is_valid, contains_zero, solve, apply, hint, Board } fro
         expect(solved).toEqual(solvedEasyBoard); // Validate the solution
     });
 
+    // Use "npm run test"

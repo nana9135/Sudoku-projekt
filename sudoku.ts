@@ -64,7 +64,7 @@ function facit(board: Board): Board{
  * @param {number} row - The row index.
  * @param {number} col - The column index.
  * @param {number} num - The number to check.
- * @precondition row and col must be between 0 and 8 inclusive
+ * @precondition row and col must be between 0 and 8 inclusive.
  * @returns {boolean} True if the number is valid, false otherwise.
  */
 function is_valid(board: Board, row: number, col: number, num: number): boolean{
@@ -93,7 +93,7 @@ function is_valid(board: Board, row: number, col: number, num: number): boolean{
  * returns the position of the first empty cell
  * contains_zero(boards.B);
  * @param {Board} board - The Sudoku board.
- * @precondition The board must be a valid sudoku board
+ * @precondition The board must be a valid sudoku board.
  * @returns {[number, number] | null} Coordinates of the empty cell or null if no empty cell is found.
  */
 function contains_zero(board: Board): [number, number] | null{
@@ -110,10 +110,11 @@ function contains_zero(board: Board): [number, number] | null{
 /**
  * Recursively solves the Sudoku board using backtracking.
  * @example
- * solves the puzzle on board B and returns a boolean if it solvable
+ * solves the puzzle on board B and returns a boolean if it is solvable
  * solve(boards.B);
  * @param {Board} board - The Sudoku board.
- * @precondition The board must be a valid sudoku board
+ * @precondition The board must be a valid sudoku board.
+ * variant the number of empty cells in the board.
  * @returns {boolean} True if a solution is found, false otherwise.
  */
 function solve(board: Board): boolean{
@@ -151,8 +152,8 @@ function solve(board: Board): boolean{
  * @param {number} value - the value to apply (1-9)
  * @param {number} x - the x coordinate (column)
  * @param {number} y - the y coordinate (row)
- * @precondition The board must be a valid sudoku board
- * @returns {Board | void} Returns the updated board or void if an error occurs
+ * @precondition The board must be a valid sudoku board.
+ * @returns {string | void} Returns a string or void if an error occurs
  */
 function apply(board: Board, value: number, x: number, y: number): void | string {
     if (value > 9 || value < 1) { // Checks for valid value between 1 and 9

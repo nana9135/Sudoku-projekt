@@ -6,7 +6,7 @@ const prompt = promptSync();
 /**
  * Displays the main menu and handles user interaction.
  * @example
- * // Starts the menu loop and prompts for user choices
+ * Starts the menu loop and prompts for user choices
  * menu();
  * @returns {void} Does not return anything, interacts with the user via console prompts
  */
